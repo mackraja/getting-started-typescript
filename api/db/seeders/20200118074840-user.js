@@ -15,11 +15,11 @@ module.exports = {
       updatedAt: new Date()
     },{
       roleId: 2,
-      firstName: 'Abhinav',
-      lastName: 'Kumar',
-      userName: 'abhi',
-      password: 'e01a175361512792551e01e659162e18d99d0ab96e2550569381192f06c6f900ca70083f28a622569a2a1a00e0b8805a3fccb51ccf84b4c7ef4f74f87014efed', // bohemia
-      salt: 'WdQbsD9lUE7PzG8wCDV/f4fwg4/fAr+Jvnrf3i/yjFOVvPuE/oyUCD2YxTCaD2JHGuP+d7vPSEK5lODFabR9WUHT9fgxxXA6OTs+b3xVGeE4qZAD3fyMGLuOFfnepHpM6UB/L69OrJr+SMTYDEMqfbUmbW03GlqAdIthi+ROl/0=',
+      firstName: 'bob',
+      lastName: 'marle',
+      userName: 'bob',
+      password: '694d2d56d6f97f294b127789a157ea91e1f4ef5e455d6c7f483e3ca1927b8a8e8efbf58a0855166e0b42609182bf285c6bc38ec8781e889a1e378d8b4a81090e', // bob
+      salt: 'HS6Yy3TXK32U3DYpgLpuHj2F9bVxlB8J/VHyVy8HNFmVSnl67s/O1fFqxKLZlo+zrOIuOcTPAu6LN60ia1MZUDGMqRHKGvyl/JgiyvosuLqbdPIAKoFtPHbTZjxxVM1X5zVUA7cNN9Zd/gPotguFk9beTgrYlvBuq8bFsqdqHk4=',
       email: 'kumarabhinav@gmail.com',
       phoneNumber: '9896360087',
       createdAt: new Date(),
