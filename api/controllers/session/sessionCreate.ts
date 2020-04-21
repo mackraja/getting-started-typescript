@@ -51,9 +51,9 @@ const sessionCreate = {
       }
 
       // Check Active User
-      if (!user.status) {
-        return Boom.unauthorized(i18n.__('controllers.session.inactive'));
-      }
+      // if (user.status === false) {
+      //   return Boom.unauthorized(i18n.__('controllers.session.inactive'));
+      // }
 
       // Match Password
       const hashedPassword = await hashPassword(password, user.salt);
