@@ -13,13 +13,13 @@ export const validUser = async (id: number) => await _getByPk(User, id);
 
 /**
  * Used to authenticate user
- * @param username 
+ * @param userName 
  */
-export const authenticate = async (username: string) => {
+export const authenticate = async (userName: string) => {
     try {
         const queryString = {
             attributes: ['id', 'userName', 'password', 'salt', 'status'],
-            where: { [Op.or]: { username, email: username } },
+            where: { [Op.or]: { userName, email: userName } },
             include: [{
                 attributes: ['name'],
                 model: Role
