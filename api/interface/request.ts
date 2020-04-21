@@ -1,4 +1,4 @@
-import Hapi from "@hapi/hapi";
+import Hapi from "@hapi/hapi"; // eslint-disable-line
 
 export interface ICredentials extends Hapi.AuthCredentials {
   id: string;

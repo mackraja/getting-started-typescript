@@ -2,18 +2,17 @@
  * @author: Monty Khanna
  */
 import Boom from '@hapi/boom';
-import joi from '@hapi/joi';
-import db from '../../db';
-import { _delete } from '../../db/repositories';
-import { _integerSchema } from '../../db/schema';
+import { deleteUser } from '../../services/userService'; // eslint-disable-line
+import { objectSchema, _integerSchema } from '../../db/schema';
 import { i18n } from '../../helpers';
-import {IRequest, IResponse} from "../../interface/request";
-
-const { User } = db.models;
+import { IRequest, IResponse } from "../../interface/request"; // eslint-disable-line
 
 const userDelete = {
-  auth: false,
-
+  auth: {
+    strategy: 'jwt',
+    scope: ['superAdmin']
+  },
+  
   tags: ['api', 'User'],
 
   description: 'Delete user',
@@ -21,24 +20,22 @@ const userDelete = {
   notes: 'delete existing user',
 
   validate: {
-    params: joi.object({
-      id: _integerSchema.description(i18n.__('controllers.user.params.id')),
+    params: objectSchema({
+      id: _integerSchema.description(i18n.__('controllers.user.id')),
     }),
-    options: { abortEarly: false },
+    options: { abortEarly: false, stripUnknown: true },
   },
 
-  handler: async (request: IRequest, h: IResponse) => {
-    const { id } = request.params;
-    const queryString = { where: { id } };
-    let delUser: any;
-
+  handler: async (request: IRequest, h: IResponse) => {    
     try {
-      delUser = await _delete(User, queryString);
+      const data: any = await deleteUser(request.params);
+      if (data.notExist) {
+        return Boom.badRequest(i18n.__('controllers.user.userNotExist'));
+      }
+      return h.response({ data });
     } catch (e) {
-      // throw new Boom(e);
-      Boom.badRequest(i18n.__('controllers.user.deleteUser'), e);
+      return Boom.badRequest(i18n.__('controllers.user.deleteUser'), e);
     }
-    return h.response(delUser);
   },
 };
 

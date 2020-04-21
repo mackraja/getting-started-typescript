@@ -1,3 +1,7 @@
-import hapiRoute from './hapiRoute';
+import HapiAuth from './hapiAuth';
+import HapiRoute from './hapiRoute';
 
-export { hapiRoute };
+export {
+    HapiAuth,
+    HapiRoute    
+    };

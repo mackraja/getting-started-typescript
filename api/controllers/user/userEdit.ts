@@ -2,10 +2,9 @@
  * @author: Monty Khanna
  */
 import Boom from '@hapi/boom';
-import joi from '@hapi/joi';
-import db from '../../db';
-import { _update } from '../../db/repositories'; // eslint-disable-line
+import { updateUser } from '../../services/userService'; // eslint-disable-line
 import {
+  objectSchema,
   _nameSchema,
   _surnameSchema,
   _integerSchema,
@@ -13,63 +12,55 @@ import {
   _emailSchema,
 } from '../../db/schema';
 import { i18n } from '../../helpers';
-import {IRequest, IResponse} from "../../interface/request";
-import userCreate from "./userCreate"; // eslint-disable-line
-
-const { User } = db.models;
-const roleIdArr = [1, 2, 3];
+import { IRequest, IResponse } from "../../interface/request"; // eslint-disable-line
 
 const userEdit = {
-  auth: false,
-
   plugins: {
     'hapi-swagger': {
       payloadType: 'form',
     },
   },
 
+  auth: {
+    strategy: 'jwt',
+    scope: ['superAdmin']
+  },
+
   tags: ['api', 'User'],
 
-  description: 'Create User',
+  description: 'Update User',
 
-  notes: 'Create new user',
+  notes: 'Update existing user',
 
   validate: {
-    params: joi.object({
-      id: _integerSchema.description(i18n.__('controllers.user.params.id')),
+    params: objectSchema({
+      id: _integerSchema.description(i18n.__('controllers.user.id')),
     }),
-    payload: joi.object({
-      roleId: _integerSchema
-        .valid(roleIdArr)
-        .description(i18n.__('controllers.user.query.roleId')),
+    payload: objectSchema({
+      firstName: _nameSchema.required().description(i18n.__('controllers.user.firstName')),
 
-      firstName: _nameSchema.description(i18n.__('controllers.user.query.firstName')),
+      lastName: _surnameSchema.description(i18n.__('controllers.user.lastName')),
 
-      lastName: _surnameSchema.description(i18n.__('controllers.user.query.lastName')),
+      status: _integerSchema.default(1).description(i18n.__('controllers.user.status')),
 
-      status: _integerSchema.description(i18n.__('controllers.user.query.status')),
-
-      username: _stringSchema.description(i18n.__('controllers.user.query.username')),
-
-      password: _stringSchema.description(i18n.__('controllers.user.query.password')),
-
-      email: _emailSchema.description(i18n.__('controllers.user.query.email')),
+      email: _emailSchema.required().description(i18n.__('controllers.user.email')),
     }),
-    options: { abortEarly: false },
+    options: { abortEarly: false, stripUnknown: true },
   },
 
   handler: async (request: IRequest, h: IResponse) => {
     const { params, payload } = request;
-    const { id } = params;
-    let isUpdated: any;
 
     try {
-      isUpdated = await _update(User, payload, { where: { id } });
+      let data: any = {};
+      data = await updateUser(params, payload);
+      if (data.isEmailExist) {
+        return Boom.badRequest(i18n.__('controllers.user.emailExists'));
+      }
+      return h.response({ data });
     } catch (e) {
-      // throw new Boom(e);
-      Boom.badRequest(i18n.__('controllers.user.updateUser'), e);
+      return Boom.badRequest(i18n.__('controllers.session.updateUser'), e);
     }
-    return h.response(isUpdated);
   },
 };
 

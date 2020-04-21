@@ -54,4 +54,4 @@ process.on('unhandledRejection', (err) => {
 });
 
 init();
-// node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
+// node -e "console.log(require('crypto').randomBytes(512).toString('base64'));"

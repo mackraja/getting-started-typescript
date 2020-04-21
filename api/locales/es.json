@@ -1,48 +1,50 @@
 {
 	"db": {
-		"error": "Ha ocurrido algún error en la base de datos"
+		"error": "Se ha producido algún error de base de datos"
 	},
 	"controllers": {
+		"role": {
+			"limit": "Ingrese no de registros",
+			"sortBy": "FieldName de la tabla de roles",
+			"order": "ASC o DESC",
+			"fetchRole": "Error: al enumerar el rol"
+		},
 		"session": {
 			"invalidUsername": "Nombre de usuario no válido",
 			"invalidPassword": "Contraseña no válida",
-			"createUser": "Error: al crear usuario",
-			"payload": {
-				"username": "Ingrese su correo electrónico o nombre de usuario",
-				"password": "Introducir la contraseña"
-			}
+			"invalidToken": "Token inválido",
+			"inactive": "cuenta inactiva",
+			"createSession": "Error: al crear sesión",
+			"userName": "Ingresar correo electrónico o nombre de usuario",
+			"password": "Ingresar contraseña"
 		},
 		"user": {
-			"query": {
-				"roleId": "PK de la tabla de roles",
-				"firstName": "Nombre del usuario",
-				"lastName": "Apellido del usuario",
-				"username": "Nombre de usuario del usuario",
-				"password": "contraseña del usuario",
-				"email": "Correo electrónico del usuario, debe ser un correo electrónico",
-				"phoneNumber": "Número de teléfono del usuario",
-				"status": "1 = activo, 0 = inactivo (predeterminado)",
-				"isDeleted": "1 = eliminado, 0 = no eliminado (predeterminado)",
-				"limit": "No introducir registros",
-				"sortBy": "FieldName de la tabla de usuario",
-				"order": "ASC o DESC"
-			},
-			"params": {
-				"id": "PK de tabla de usuario"
-			},
-			"deleteUser": "Error: al eliminar el usuario",
+			"id": "PK de la tabla de usuario",
+			"roleId": "PK de tabla de roles",
+			"firstName": "Nombre del usuario",
+			"lastName": "Apellido del usuario",
+			"userName": "Nombre de usuario del usuario",
+			"password": "Contraseña del usuario",
+			"email": "Correo electrónico del usuario, debe ser un correo electrónico",
+			"phoneNumber": "Número de teléfono del usuario",
+			"status": "1 = Activo, 0 = Inactivo (Predeterminado)",
+			"isDeleted": "1 = eliminado, 0 = no eliminado (predeterminado)",
+			"limit": "Ingrese no de registros",
+			"sortBy": "FieldName de la tabla de usuario",
+			"orden": "ASC o DESC",
+			"emailExists": "La dirección de correo electrónico ya existe",
+			"userNotExist": "El usuario no existe",
+			"deleteUser": "Error: al eliminar usuario",
 			"updateUser": "Error: al actualizar el usuario",
-			"fetchUser": "Error: Mientras se enumera al usuario"
+			"fetchUser": "Error: al enumerar usuario"
 		}
 	},
 	"plugins": {
-		"auth": {
-			"invalid": "sesión inválida o expirada",
-			"expired": "sesión expiró",
-			"missingToken": "Falta el token de autenticación",
-			"invalidToken": "El token de autenticación no es válido",
-			"missingApiKey": "Falta la clave api",
-			"keyExpired": "Tu clave de API expiró"
-		}
+		"invalid": "Sesión inválida o caducada",
+		"expired": "Sesión expirada",
+		"missingToken": "Falta el token de autenticación",
+		"invalidToken": "El token de autenticación no es válido",
+		"missingApiKey": "Falta la clave de la API",
+		"keyExpired": "Su clave de API ha caducado"
 	}
 }

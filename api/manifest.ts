@@ -7,7 +7,7 @@ import Vision from '@hapi/vision';
 import Good from '@hapi/good';
 import HapiSwagger from 'hapi-swagger';
 import * as rootPackage from '../package.json';
-import { hapiRoute as HapiRoute } from './plugins';
+import { HapiAuth, HapiRoute } from './plugins';
 
 const hapiSwaggerOptions: HapiSwagger.RegisterOptions = {
     pathPrefixSize: 1,
@@ -29,6 +29,7 @@ const hapiSwaggerOptions: HapiSwagger.RegisterOptions = {
             in: 'header'
         }
     },
+    security: [{ jwt: [] }], 
     schemes: (process.env.NODE_ENV || 'development') !== 'development' ? ['https'] : ['http'],
 };
 
@@ -89,10 +90,13 @@ export const plugins: Array<Hapi.ServerRegisterPluginObject<any>> = [
         options: hapiSwaggerOptions,
     },
     {
+        plugin: HapiAuth
+    },
+    {
         plugin: HapiRoute,
         options: {
             cwd: __dirname,
-            routes: 'controllers/**/*Controller.ts',
+            routes: 'controllers/**/*Controller.*',
         },
     },
     {

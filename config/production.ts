@@ -8,4 +8,5 @@ export = {
   debugLog: 0,
   basePath: API_BASE_PATH,
   constants: CONSTANTS,
+  sendEmail: 0,
 };

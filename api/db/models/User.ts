@@ -24,8 +24,14 @@ export class User extends Model<User> {
   @Column(DataType.TEXT)
   password!: string;
 
+  @Column(DataType.TEXT)
+  salt!: string;
+
   @Column({type: DataType.TEXT, unique: true})
   email!: string;
+
+  @Column(DataType.BOOLEAN)
+  emailVerified!: boolean;
 
   @Column(DataType.TEXT)
   phoneNumber!: string;

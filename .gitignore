@@ -106,6 +106,7 @@ dist
 
 # vs local files
 .idea/
+.vscode/
 
 # lock files
 package-lock.json

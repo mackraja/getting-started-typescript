@@ -4,7 +4,7 @@
 import joi from '@hapi/joi';
 
 export const _stringSchema = joi.string();
-export const _objectSchema = joi.object();
+export const objectSchema = (obj: any) => joi.object(obj);
 export const _alphaNumSchema = joi.string().alphanum();
 export const _integerSchema = joi.number().integer();
 export const _nameSchema = _alphaNumSchema.min(2).max(30);

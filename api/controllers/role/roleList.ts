@@ -2,16 +2,13 @@
  * @author: Monty Khanna
  */
 import Boom from '@hapi/boom';
-import joi from '@hapi/joi';
 import config from "config";
-import db from '../../db';
-import { _getListWithCount } from '../../db/repositories';
-import { _integerSchema, _stringSchema } from '../../db/schema';
+import { getRoleList } from '../../services/roleService';
+import { objectSchema, _integerSchema, _stringSchema } from '../../db/schema';
 import { i18n } from '../../helpers';
-import { IRequest, IResponse } from '../../interface/request';
+import { IRequest, IResponse } from '../../interface/request'; // eslint-disable-line
 
-const { DEFAULT_OFFSET }  = config.get('constants');
-const { Role } = db.models;
+const { DEFAULT_OFFSET, DEFAULT_ORDER }  = config.get('constants');
 
 const roleList = {
   auth: false,
@@ -23,30 +20,23 @@ const roleList = {
   notes: 'get details of all Role',
 
   validate: {
-    query: joi.object({
-      limit: _integerSchema.default(DEFAULT_OFFSET).description(i18n.__('controllers.user.query.limit')),
+    query: objectSchema({
+      limit: _integerSchema.default(DEFAULT_OFFSET).description(i18n.__('controllers.role.limit')),
 
-      sortBy: _stringSchema.default('name').description(i18n.__('controllers.user.query.sortBy')),
+      sortBy: _stringSchema.default('name').description(i18n.__('controllers.role.sortBy')),
 
-      order: _stringSchema.default('asc').description(i18n.__('controllers.user.query.order')),
+      order: _stringSchema.default(DEFAULT_ORDER).description(i18n.__('controllers.role.order')),
     }),
-    options: { abortEarly: false },
+    options: { abortEarly: false, stripUnknown: true },
   },
 
   handler: async (request: IRequest, h: IResponse) => {
-    const { limit, sortBy, order } = request.query;
-    const queryString = {
-      where: { status: true, isDeleted: false },
-      limit,
-      order: [[sortBy, order]],
-    };
-
+    const { query } = request;
     try {
-      const data: any = await _getListWithCount(Role, queryString);
+      const data: any = await getRoleList(query);
       return h.response({ data });
     } catch (e) {
-      // throw new Boom(e);
-      Boom.badRequest(i18n.__('controllers.user.fetchUser'), e);
+      return Boom.badRequest(i18n.__('controllers.role.fetchRole'), e);
     }
   },
 };

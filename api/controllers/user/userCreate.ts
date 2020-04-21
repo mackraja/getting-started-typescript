@@ -2,10 +2,9 @@
  * @author: Monty Khanna
  */
 import Boom from '@hapi/boom';
-import joi from '@hapi/joi';
-import db from '../../db';
-import { _add } from '../../db/repositories'; // eslint-disable-line
+import { addUser } from '../../services/userService'; // eslint-disable-line
 import {
+  objectSchema,
   _nameSchema,
   _surnameSchema,
   _integerSchema,
@@ -13,12 +12,19 @@ import {
   _emailSchema,
 } from '../../db/schema';
 import { i18n } from '../../helpers';
-import {IRequest, IResponse} from "../../interface/request"; // eslint-disable-line
-
-const { User } = db.models;
+import { IRequest, IResponse } from "../../interface/request"; // eslint-disable-line
 
 const userCreate = {
-  auth: false,
+  plugins: {
+    'hapi-swagger': {
+      payloadType: 'form',
+    },
+  },
+
+  auth: {
+    strategy: 'jwt',
+    scope: ['superAdmin']
+  },
 
   tags: ['api', 'User'],
 
@@ -27,35 +33,37 @@ const userCreate = {
   notes: 'Create new user',
 
   validate: {
-    query: joi.object({
-      roleId: _integerSchema.required().description(i18n.__('controllers.user.query.roleId')),
+    payload: objectSchema({
+      roleId: _integerSchema.required().description(i18n.__('controllers.user.roleId')),
 
-      firstName: _nameSchema.required().description(i18n.__('controllers.user.query.firstName')),
+      firstName: _nameSchema.required().description(i18n.__('controllers.user.firstName')),
 
-      lastName: _surnameSchema.description(i18n.__('controllers.user.query.lastName')),
+      lastName: _surnameSchema.description(i18n.__('controllers.user.lastName')),
 
-      status: _integerSchema.default(0).description(i18n.__('controllers.user.query.status')),
+      status: _integerSchema.default(0).description(i18n.__('controllers.user.status')),
 
-      username: _stringSchema.required().description(i18n.__('controllers.user.query.username')),
+      userName: _stringSchema.required().description(i18n.__('controllers.user.userName')),
 
-      password: _stringSchema.required().description(i18n.__('controllers.user.query.password')),
+      password: _stringSchema.required().description(i18n.__('controllers.user.password')),
 
-      email: _emailSchema.required().description(i18n.__('controllers.user.query.email')),
+      email: _emailSchema.required().description(i18n.__('controllers.user.email')),
     }),
-    options: { abortEarly: false },
+    options: { abortEarly: false, stripUnknown: true },
   },
 
   handler: async (request: IRequest, h: IResponse) => {
-    const { query } = request;
-    let users: any;
+    const { payload } = request;
 
     try {
-      users = await _add(User, query);
+      let data: any = {};
+      data = await addUser(payload);
+      if (data.isEmailExist) {
+        return Boom.badRequest(i18n.__('controllers.user.emailExists'));
+      }
+      return h.response({ data });
     } catch (e) {
-      // throw new Boom(e);
-      Boom.badRequest(i18n.__('controllers.session.createUser'), e);
+      return Boom.badRequest(i18n.__('controllers.session.createUser'), e);
     }
-    return h.response(users);
   },
 };
 
