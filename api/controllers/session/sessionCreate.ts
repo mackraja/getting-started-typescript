@@ -64,11 +64,7 @@ const sessionCreate = {
       // Generate Token
       const credentials = { id: user.id, userName, scope: [user.role.name] };
       const jwtOptions = { algorithm: ALG_PARAMETER, expiresIn: EXPIRE_AT };
-      console.log('credentials --------- ', credentials);
-      console.log('jwtOptions --------- ', jwtOptions);
-      console.log('process.env.JWT_KEY -------- ', process.env.JWT_KEY);
       const token = await jwt.sign(credentials, process.env.JWT_KEY, jwtOptions);
-      console.log('token --------- ', token);
       return h.response({ data: { id: user.id, token } });
     } catch (e) {
       return Boom.badRequest(i18n.__('controllers.session.createSession'), e);
