@@ -1,0 +1,20 @@
+- link = '' + htmlLocals.resetPassLink
+head
+    style.
+      .button {
+      background-color: #1c66c3;
+      border: none;
+      color: white;
+      padding: 10px 25px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      }
+p Hi #{htmlLocals.firstName},
+p You have requested to reset your password.
+p   To reset your password, click the following link and follow the instructions.
+a(href=link)
+      button.button(type="button") RESET PASSWORD

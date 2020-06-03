@@ -65,7 +65,7 @@ const sessionCreate = {
       const credentials = { id: user.id, userName, scope: [user.role.name] };
       const jwtOptions = { algorithm: ALG_PARAMETER, expiresIn: EXPIRE_AT };
       const token = await jwt.sign(credentials, process.env.JWT_KEY, jwtOptions);
-      return h.response({ data: { id: user.id, token } });
+      return h.response({ data: { token } });
     } catch (e) {
       return Boom.badRequest(i18n.__('controllers.session.createSession'), e);
     }

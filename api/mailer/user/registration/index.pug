@@ -1,0 +1,10 @@
+extends ../../layouts/default
+
+- invitelink = '' + htmlLocals.invitelink
+
+block content
+    p Hi #{htmlLocals.name},
+    p Please use below link to verify your account
+    a(href=invitelink, title='verify account', style='text-decoration:none;', target='_blank') Verify Account
+
+extends ../../layouts/footer
