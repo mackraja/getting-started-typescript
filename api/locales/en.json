@@ -37,6 +37,9 @@
 			"deleteUser": "Error: While deleting User",
 			"updateUser": "Error: While updating User",
 			"fetchUser": "Error: While listing User"
+		},
+		"program": {
+			"count": "Count of fizz buzz program"
 		}
 	},
 	"plugins": {

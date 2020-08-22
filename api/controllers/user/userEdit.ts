@@ -59,7 +59,7 @@ const userEdit = {
       }
       return h.response({ data });
     } catch (e) {
-      return Boom.badRequest(i18n.__('controllers.session.updateUser'), e);
+      return Boom.badRequest();
     }
   },
 };
