@@ -26,10 +26,10 @@ const roleList = {
     options: { abortEarly: false, stripUnknown: true },
   },
 
-  handler: async (request: IRequest, h: IResponse) => {
+  handler: (request: IRequest, h: IResponse) => {
     const { params } = request;
     try {
-      const data: any = await getFizzBuzz(params);
+      const data = getFizzBuzz(params);
       return h.response({ data });
     } catch (e) {
       return Boom.badRequest(i18n.__('controllers.role.fetchRole'), e);

@@ -2,7 +2,7 @@
  * getFizzBuzz: Used to get fizz, buzz, fizzbuzz based on count
  * @param params
  */
-export const getFizzBuzz = async (params: { count: number }) => {
+export const getFizzBuzz = (params: { count: number }) => {
   try {
     const { count } = params;
     let fizzBuzzArr = [];
