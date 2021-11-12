@@ -10,10 +10,13 @@ import { name as serverName } from '../package.json';
 
 // console.table(dotenv.config());
 
+const host = process.env.HOST || '0.0.0.0';
+const port = process.env.PORT || 4000;
+
 const init = async () => {
     const serverOptions = Object.assign({}, {
-        host: process.env.HOST || '0.0.0.0',
-        port: process.env.PORT || 4000
+        host,
+        port 
     }, connections);
     // @ts-ignore
     const server: Hapi.Server = Hapi.server(serverOptions);
@@ -44,7 +47,7 @@ const init = async () => {
     console.info('\n==> ✅ Connection has been established successfully !!');
     // Start Server
     await server.start();
-    console.info('\n==> ✅  %s is running, talking to API server on port %s.', serverName, process.env.PORT || 4000);
+    console.info('\n==> ✅  %s is running, talking to API server on port %s.', serverName, port);
     console.info('\n==> 💻  Open %s%s in a browser to view the api docs.\n\n', server.info.uri, '/documentation');
 };
 
