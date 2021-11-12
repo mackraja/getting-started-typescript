@@ -9,7 +9,13 @@ if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL) {
         {
             dialect,
             protocol: dialect,
-            modelPaths: [__dirname + '/models']
+            modelPaths: [__dirname + '/models'],
+            dialectOptions: {
+                ssl: {      /* <----- Add SSL option */
+                  require: true,
+                  rejectUnauthorized: false 
+                }
+              },
         });
 } else {
     const { host, database, username, password } = config.get('db');
