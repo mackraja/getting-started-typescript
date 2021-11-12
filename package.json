@@ -31,6 +31,9 @@
   "bugs": {
     "url": "https://github.com/mackraja/getting-started-typescript/issues"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "homepage": "https://github.com/mackraja/getting-started-typescript#readme",
   "dependencies": {
     "@hapi/boom": "^9.1.4",
