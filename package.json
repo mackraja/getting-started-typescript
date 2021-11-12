@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
+    "postinstall": "npm run build",
     "start": "ts-node-dev --respawn --transpile-only ./api",
     "test": "lab -v **/*.test.js",
     "db": "sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
