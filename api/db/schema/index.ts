@@ -1,7 +1,7 @@
 /**
  * @author: Monty Khanna
  */
-import joi from '@hapi/joi';
+import joi from 'joi';
 
 export const _stringSchema = joi.string();
 export const objectSchema = (obj: any) => joi.object(obj);
